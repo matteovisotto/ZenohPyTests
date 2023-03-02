@@ -1,0 +1,46 @@
+{
+  id: "7f7a70cc", //hex UUIDv4 String
+  connect: {
+    endpoints: [
+      "tcp/172.16.0.42:7447", //zenoh2
+      "tcp/172.16.0.40:7447" //zenoh3
+    ],
+  },
+  plugins: {
+    storage_manager: {
+      volumes: {
+        influxdb: {
+          url: "http://localhost:8086",
+        }
+      },
+      storages: {
+        storage1: {
+          key_expr: "demo/**/temp",
+          strip_prefix: "demo",
+          volume: {
+            id: "influxdb",
+            db: "zenoh_temp_node_1",
+            create_db: true,
+            on_closure: "do_nothing",
+          },
+          replica_config: {
+            publication_interval: 5,
+            propagation_delay: 200,
+            delta: 1000,
+          }
+        },
+        storage2: {
+          key_expr: "demo/**/hum",
+          strip_prefix: "demo",
+          volume: {
+            id: "influxdb",
+            db: "zenoh_hum_node_1",
+            create_db: true,
+            on_closure: "do_nothing",
+          }
+        }
+      }
+    },
+    rest: { http_port: 8000 }
+  }
+}

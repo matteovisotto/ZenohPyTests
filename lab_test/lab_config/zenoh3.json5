@@ -1,0 +1,28 @@
+{
+  id: "7f7a70cb", //hex UUIDv4 String
+  connect: {
+    endpoints: [
+      "tcp/172.16.0.46:7447", //zenoh1
+      "tcp/172.16.0.42:7447" //zenoh2
+    ],
+  },
+  plugins: {
+    storage_manager: {
+      volumes: {
+        fs: {},
+      },
+      storages: {
+        // configuration of a "demo" storage using the "fs" volume
+        storage3: {
+          key_expr: "demo/strings/**",
+          strip_prefix: "demo/strings",
+          volume: {
+            id: "fs",
+            dir: "strings"
+          }
+        }
+      }
+    },
+    rest: { http_port: 8000 }
+  }
+}

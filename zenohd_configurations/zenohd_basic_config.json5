@@ -1,0 +1,12 @@
+{
+  id: "7f7a70cc", //hex UUIDv4 String
+  connect: {
+    endpoints: [
+      "tcp/93.43.230.177:7447"
+      // "<proto>/<address>" e.g. tcp/xxx.xxx.xxx.xxx:7447
+    ],
+  },
+  plugins: {
+    rest: { http_port: 8000 }
+  }
+}

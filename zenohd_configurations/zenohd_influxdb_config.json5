@@ -1,0 +1,53 @@
+{
+  id: "7f7a70ca", //hex UUIDv4 String -> last c zenoh1, last a zenoh2
+  connect: {
+    endpoints: [
+      "tcp/172.16.0.46:7447"
+      // "<proto>/<address>" e.g. tcp/xxx.xxx.xxx.xxx:7447
+    ],
+  },
+  plugins: {
+    // configuration of "storage_manager" plugin:
+    storage_manager: {
+      volumes: {
+        // configuration of a "influxdb" volume (the "zbackend_influxdb" backend library will be loaded at startup)
+        influxdb: {
+          // URL to the InfluxDB service
+          url: "http://localhost:8086",
+          private: {
+            // If needed: InfluxDB credentials, preferably admin for databases creation and drop
+            //username: "admin",
+            //password: "password"
+          }
+        }
+      },
+      storages: {
+        // configuration of a "demo" storage using the "influxdb" volume
+        storage1: {
+          // the key expression this storage will subscribes to
+          key_expr: "demo/test2/**",
+          // this prefix will be stripped from the received key when converting to database key.
+          // i.e.: "demo/example/a/b" will be stored as "a/b"
+          // this option is optional
+          strip_prefix: "demo/test2",
+          volume: {
+            id: "influxdb",
+            // the database name within InfluxDB
+            db: "zenoh_test_1",
+            // if the database doesn't exist, create it
+            create_db: true,
+            // strategy on storage closure
+            on_closure: "drop_db",
+            private: {
+              // If needed: InfluxDB credentials, with read/write privileges for the database
+              //username: "user",
+              //password: "password"
+            }
+          }
+        }
+      }
+    },
+    // Optionally, add the REST plugin
+    rest: { http_port: 8000 }
+  }
+}
