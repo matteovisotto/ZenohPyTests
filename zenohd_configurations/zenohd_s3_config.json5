@@ -2,8 +2,7 @@
   id: "7f7a70cc", //hex UUIDv4 String
   connect: {
     endpoints: [
-      "tcp/172.16.0.42:7447"
-      // "<proto>/<address>" e.g. tcp/xxx.xxx.xxx.xxx:7447
+
     ],
   },
   plugins: {
@@ -11,69 +10,28 @@
     storage_manager: {
       volumes: {
         s3: {
-
-            // AWS region to which connect (see https://docs.aws.amazon.com/general/latest/gr/s3.html).
-            // This field is mandatory if you are going to communicate with an AWS S3 server and
-            // optional in case you are working with a MinIO S3 server.
-            //region: "eu-west-1",
-
-            // Endpoint where the S3 server is located.
-            // This parameter allows you to specify a custom endpoint when working with a MinIO S3
-            // server.
-            // This field is mandatory if you are working with a MinIO server and optional in case
-            // you are working with an AWS S3 server as long as you specified the region, in which
-            // case the endpoint will be resolved automatically.
             url: "http://172.16.0.40:9000",
-
-            // Optional TLS specific parameters to enable HTTPS with MinIO. Configuration shared by
-            // all the associated storages.
-            //tls: {
-              // Certificate authority to authenticate the server.
-              //root_ca_certificate: "/home/user/certificates/minio/ca.pem",
-            //},
-
         }
       },
       storages: {
-        // Configuration of a "demo" storage using the S3 volume. Each storage is associated to a
-        // single S3 bucket.
         s3_storage: {
-
-          // The key expression this storage will subscribes to
-          key_expr: "demo/test/**",
-
-          // this prefix will be stripped from the received key when converting to database key.
-          // i.e.: "demo/example/a/b" will be stored as "a/b"
-          strip_prefix: "demo/test",
+          key_expr: "demo/strings/**",
+          strip_prefix: "demo/strings",
 
           volume: {
-            // Id of the volume this storage is associated to
             id: "s3",
-
-            // Bucket to which this storage is associated to
             bucket: "zenoh",
-
-            // The storage attempts to create the bucket, but if the bucket already exists and is
-            // owned by you, then with 'reuse_bucket' you can associate that preexisting bucket to
-            // the storage, otherwise it will fail.
             reuse_bucket: true,
-
-            // If the storage is read only, it will only handle GET requests
             read_only: false,
-
-            // strategy on storage closure, either `destroy_bucket` or `do_nothing`
-            on_closure: "do_nothing",
-
+            on_closure: "destroy_bucket",
             private: {
-                // Credentials for interacting with the S3 bucket
-                access_key: "ylG1Ci2v4ZBIQkWK",
-                secret_key: "jdnguvPnQSesoYhi5jRL0DagevqOtVd2",
+                access_key: "y3EKm9xxiXe08H8h",
+                secret_key: "2qoHNLeE15lKH98EbC9wMFKx4Ri0JHI1",
             }
           }
         },
       }
     },
-    // Optionally, add the REST plugin
     rest: { http_port: 8000 }
   },
 }
