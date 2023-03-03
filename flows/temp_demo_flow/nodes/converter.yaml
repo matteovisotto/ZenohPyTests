@@ -1,0 +1,14 @@
+id: converter
+
+vars:
+ BASE_DIR: "./flows/temp_demo_flow"
+
+uri: "file://{{ BASE_DIR }}/nodes/converter.py"
+
+inputs:
+  - id: temp
+    type: float
+
+outputs:
+  - id: tempf
+    type: float

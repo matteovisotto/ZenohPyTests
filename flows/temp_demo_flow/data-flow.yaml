@@ -1,0 +1,34 @@
+flow: temp-demo-flow
+
+vars:
+ BASE_DIR: "./flows/temp_demo_flow"
+
+sources:
+  - id: source-sub
+    descriptor: "file://{{ BASE_DIR }}/nodes/source-sub.yaml"
+
+
+operators:
+  - id: converter
+    descriptor: "file://{{ BASE_DIR }}/nodes/converter.yaml"
+
+
+sinks:
+  - id: sink-pub
+    descriptor: "file://{{ BASE_DIR }}/nodes/sink-pub.yaml"
+
+
+links:
+  - from:
+      node: source-sub
+      output: out
+    to:
+      node: converter
+      input: temp
+
+  - from:
+      node: converter
+      output: tempf
+    to:
+      node: sink-pub
+      input: tempf

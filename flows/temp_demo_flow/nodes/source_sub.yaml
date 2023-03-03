@@ -1,0 +1,10 @@
+id: source-sub
+
+vars:
+ BASE_DIR: "./flows/temp_demo_flow"
+
+uri: "file://{{ BASE_DIR }}/nodes/source_sub.py"
+
+outputs:
+  - id: out
+    type: float

@@ -1,0 +1,10 @@
+id: sink-pub
+
+vars:
+ BASE_DIR: "./flows/temp_demo_flow"
+
+uri: "file://{{ BASE_DIR }}/nodes/sink_pub.py"
+
+inputs:
+  - id: tempf
+    type: float
