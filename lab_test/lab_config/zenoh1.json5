@@ -2,8 +2,9 @@
   id: "7f7a70cc", //hex UUIDv4 String
   connect: {
     endpoints: [
-      "tcp/172.16.0.42:7447", //zenoh2
-      "tcp/172.16.0.40:7447" //zenoh3
+      "tcp/172.16.0.45:7447", //zenoh2
+      "tcp/172.16.0.46:7447", //zenoh3
+      "tcp/172.12.0.47:7447" //zenoh4
     ],
   },
   plugins: {
